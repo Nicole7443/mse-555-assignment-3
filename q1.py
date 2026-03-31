@@ -358,44 +358,16 @@ def call_llm(prompt: str) -> str:
     - Do not post-process the response here — return it raw.  Parsing and
       validation happen in parse_vector_from_response().
     """
-    # ── Option A: OpenAI ────────────────────────────────────────────────────
-    # import os
-    # from openai import OpenAI
-    #
-    # client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    # resp = client.chat.completions.create(
-    #     model="gpt-4o",
-    #     messages=[{"role": "user", "content": prompt}],
-    #     temperature=0.0,
-    # )
-    # return (resp.choices[0].message.content or "").strip()
-
-    # ── Option B: Anthropic (Claude) ────────────────────────────────────────
-    # import os
-    # import anthropic
-    #
-    # client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-    # resp = client.messages.create(
-    #     model="claude-sonnet-4-6",
-    #     max_tokens=1024,
-    #     messages=[{"role": "user", "content": prompt}],
-    # )
-    # return resp.content[0].text.strip()
-
     # ── Option C: Google Gemini ──────────────────────────────────────────────
-    # import os
-    # from google import genai
-    #
-    # client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-    # resp = client.models.generate_content(
-    #     model="gemini-2.5-pro",
-    #     contents=prompt,
-    # )
-    # return resp.text.strip()
-
-    # TODO ── uncomment one option above, then delete this line ─────────────
-    raise NotImplementedError("Implement call_llm() by uncommenting one option above")
-
+    import os
+    from google import genai
+    
+    client = genai.Client(api_key=os.getenv("AIzaSyAXZewYgCX95w9B2bPD3yLyTQaotLtfgQk"))
+    resp = client.models.generate_content(
+        model="gemini-2.5-pro",
+        contents=prompt,
+    )
+    return resp.text.strip()
 
 # ============================================================================
 # CLIENT-LEVEL SCORING
